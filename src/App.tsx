@@ -2,7 +2,7 @@ import { useState } from 'react'; // Remove 'client' import
 import { ApolloClient, InMemoryCache, gql, useMutation } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'https://tap-me-2.onrender.com', 
+  uri: 'https://tap-me-2.onrender.com/graphql', 
   cache: new InMemoryCache(),
 });
 
