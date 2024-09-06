@@ -1,11 +1,5 @@
-// In src/App.tsx
-import { useState } from 'react';
-import { ApolloClient, InMemoryCache, gql, useMutation } from '@apollo/client';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:4000', // Replace with your deployed backend URL
-  cache: new InMemoryCache(),
-});
+import { useState } from 'react'; // Remove 'client' import
+import { gql, useMutation } from '@apollo/client';
 
 const ADD_COINS = gql`
   mutation AddCoins($telegramId: String!, $coins: Int!) {
