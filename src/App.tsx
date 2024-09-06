@@ -1,35 +1,39 @@
-import { useState } from 'react'; // Remove 'client' import
-import { ApolloClient, InMemoryCache, gql, useMutation } from '@apollo/client';
+import React from 'react';
+import { useQuery, gql } from '@apollo/client';
 
-const client = new ApolloClient({
-  uri: 'https://tap-me-2.onrender.com/graphql', 
-  cache: new InMemoryCache(),
-});
-
-const ADD_COINS = gql`
-  mutation AddCoins($telegramId: String!, $coins: Int!) {
-    addCoins(telegramId: $telegramId, coins: $coins) {
+// Define the GraphQL query
+const GET_USER = gql`
+  query GetUser($telegramId: String!) {
+    getUser(telegramId: $telegramId) {
+      telegramId
       coins
     }
   }
 `;
 
-const App: React.FC = () => {
-  const [coins, setCoins] = useState(0);
-  const [addCoins] = useMutation(ADD_COINS);
+function App() {
+  // Use the query hook
+  const { loading, error, data } = useQuery(GET_USER, {
+    variables: { telegramId: '123456789' } // Replace with the actual telegramId
+  });
 
-  const handleTap = () => {
-    setCoins(coins + 1);
-    addCoins({ variables: { telegramId: "your-telegram-id", coins: coins + 1 } });
-  };
+  // Handle loading state
+  if (loading) return <p>Loading...</p>;
 
+  // Handle error state
+  if (error) {
+    console.error("GraphQL Error:", error);
+    return <p>Error occurred.</p>;
+  }
+
+  // Render data
   return (
-    <div className="App">
-      <h1>TapMe Clicker Game</h1>
-      <p>Your Coins: {coins}</p>
-      <button onClick={handleTap} className="tap-button">Tap!</button>
+    <div>
+      <h1>User Info</h1>
+      <p>Telegram ID: {data.getUser.telegramId}</p>
+      <p>Coins: {data.getUser.coins}</p>
     </div>
   );
-};
+}
 
 export default App;
