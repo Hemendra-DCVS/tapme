@@ -2,7 +2,7 @@ import { useState } from 'react'; // Remove 'client' import
 import { ApolloClient, InMemoryCache, gql, useMutation } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'https://your-deployed-backend-url', // Replace with your actual backend URL
+  uri: 'https://tap-me-2.onrender.com', 
   cache: new InMemoryCache(),
 });
 
